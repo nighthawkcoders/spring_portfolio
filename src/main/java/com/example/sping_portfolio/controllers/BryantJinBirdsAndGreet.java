@@ -21,7 +21,7 @@ public class BryantJinBirdsAndGreet {
     }
 
     @GetMapping("/html_demo")    // CONTROLLER handles GET request for /greeting, maps it to greeting() and does variable bindings
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+    public String htmldemo(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         return "demo"; // returns HTML VIEW (greeting)
     }
 }
