@@ -30,7 +30,7 @@ public class Main {
 
         avg12 = (grade1 + grade2)/2.0;
         avg34 = (grade3 + grade4)/2.0;
-        finalAvg = (avg12 + avg34 + grade5)/3.0;
+        finalAvg = (grade1 + grade2 + grade3 + grade4 + grade5)/5.0; // (avg12 * 2 + avg34 * 2 + grade5)/5.0 works as well
 
         String finalOutput = String.format("Okay, %s, you got %f for grading period 1, %f for grading period 2, and %f for your total average.", name, avg12, avg34, finalAvg);
         System.out.println(finalOutput);
