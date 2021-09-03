@@ -6,9 +6,8 @@
 <body>
     <!-- Begin navigation fragments -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header">
-        <a class="navbar-brand" href="http://nighthawkcodingsociety.com/">
-            <img src="/static/images/ncs_logo.png" th:src="@{/images/ncs_logo.png}" width="50" height="50" class="d-inline-block align-center" alt="">
-            Nighthawk Coders
+        <a class="navbar-brand" href="/">
+            Distraction
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,30 +16,45 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <!--root menu -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Intro <span class="sr-only">(current)</span></a>
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" href="/">Intro <span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarPBL" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        PBL
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/greet">Greet/About</a>
-                        <a class="dropdown-item" href="/birds">Birds</a>
-                        <a class="dropdown-item" href="/dne">404 error</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarTPT" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        TPT
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:href="@{/sanvipal_javaref.pdf}" target="_blank" rel="noopener noreferrer">Journal</a>
-                        <a class="dropdown-item" href="https://freekashmir.nighthawkcodingsociety.com/" target="_blank" rel="noopener noreferrer">AP units</a>
-                        <a class="dropdown-item" href="https://drone.nighthawkcodingsociety.com/ap-lessons/interface-abstraction-FRQ" target="_blank" rel="noopener noreferrer">2006 FRQ</a>
-                        <a class="dropdown-item" href="https://drone.nighthawkcodingsociety.com/ap-lessons/interface-abstraction-FRQ" target="_blank" rel="noopener noreferrer">2019 FRQ</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/music">Music</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/movies">Movies</a>
+                </li>
+
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarPBL" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        PBL-->
+<!--                    </a>-->
+
+<!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                        <a class="dropdown-item" href="/">Home</a>-->
+<!--                        <a class="dropdown-item" href="/login">Login</a>-->
+<!--                        <a class="dropdown-item" href="/music">Latest Music</a>-->
+<!--                        <a class="dropdown-item" href="/movies">Latest Movies</a>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarTPT" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        Media-->
+<!--                    </a>-->
+<!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                        <a class="dropdown-item" th:href="@{/sanvipal_javaref.pdf}" target="_blank" rel="noopener noreferrer">Journal</a>-->
+<!--                        <a class="dropdown-item" href="https://freekashmir.nighthawkcodingsociety.com/" target="_blank" rel="noopener noreferrer">AP units</a>-->
+<!--                        <a class="dropdown-item" href="https://drone.nighthawkcodingsociety.com/ap-lessons/interface-abstraction-FRQ" target="_blank" rel="noopener noreferrer">2006 FRQ</a>-->
+<!--                        <a class="dropdown-item" href="https://drone.nighthawkcodingsociety.com/ap-lessons/interface-abstraction-FRQ" target="_blank" rel="noopener noreferrer">2019 FRQ</a>-->
+<!--                    </div>-->
+<!--                </li>-->
             </ul>
             <!-- Clock display -->
             <div>
