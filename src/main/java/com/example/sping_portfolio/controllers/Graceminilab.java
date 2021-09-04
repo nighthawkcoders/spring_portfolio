@@ -20,3 +20,4 @@ public class Graceminilab {
         return "greet"; // returns HTML VIEW (greeting)
     }
 }
+// incorporating birds and greet mini lab
