@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller  // HTTP requests are handled as a controller, using the @Controller annotation
-public class Graceminilab {
+public class Ericminilab {
     @GetMapping("/birds")
     // CONTROLLER handles GET request for /greeting, maps it to greeting() and does variable bindings
     public String birds() {
@@ -20,4 +20,3 @@ public class Graceminilab {
         return "greet"; // returns HTML VIEW (greeting)
     }
 }
-// incorporating birds and greet mini lab
