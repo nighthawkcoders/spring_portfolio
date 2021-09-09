@@ -6,7 +6,7 @@ public class EricIsCool {
 
     public static void main(String[] args) {
 
-        System.out.print("Eric is cool");
+        System.out.print("eric is cool");
 
     }
 }
