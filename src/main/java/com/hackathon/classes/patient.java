@@ -19,6 +19,9 @@ public class patient {
         if (isSick && !hasHealthInsurance) {
             return false;
         }
+        else if (!(isSick && hasHealthInsurance)){
+            return false;
+        }
         else {
             return true;
         }
