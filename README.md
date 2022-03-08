@@ -1,4 +1,4 @@
-## The Weasels (Period 2)
+## The Weasels 🐿 (Period 2)
 
 
 #### TimeBox
