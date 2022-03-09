@@ -10,7 +10,7 @@
 | Chris Duroiu | ChristopherDuroiu | [@ChristopherDuroiu](https://github.com/ChristopherDuroiu) | Technical Officer      | |
 | Raquib Alam  | ChiefGuap     | [@ChiefGuap](https://github.com/ChiefGuap)         | Deployment Manager |                                                                                                                   
 ## Project Description/Ideas/Success Ideas
-#### * Project sponsored by Coding4Kidz (a DNHS club that teaches local elementary school students how to code)
+#### * Project Owner Described: Our work is sponsored by Coding4Kidz (a DNHS club that teaches local elementary school students how to code)
 #### * This website will contain a calendar with dates for teaching sessions, small coding tutorials/youtube videos to clarify content in class, as well as contact and sign-up forms that allow parents to easily register for classes.  
 #### * We plan to use Databases to keep track of the students registered and sign-ups and a sleek front end design will be made with bootstrap
 #### * Figma will be used as a wireframe and is linked [here] (https://www.figma.com/file/ZlMdwXET7GXIKG1iqHcoZN/AP-CSA-Tri-3-Coding4Kidz?node-id=0%3A1)
