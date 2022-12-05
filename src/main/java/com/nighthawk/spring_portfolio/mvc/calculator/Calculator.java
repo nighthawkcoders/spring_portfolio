@@ -24,6 +24,8 @@ public class Calculator {
     private final Map<String, Integer> OPERATORS = new HashMap<>();
     {
         // Map<"token", precedence>
+        OPERATORS.put("ROOT", 1);
+        OPERATORS.put("^", 2);
         OPERATORS.put("*", 3);
         OPERATORS.put("/", 3);
         OPERATORS.put("%", 3);
@@ -127,6 +129,8 @@ public class Calculator {
                     }
                     tokenStack.pop();
                     break;
+                case "ROOT":
+                case "^":
                 case "+":
                 case "-":
                 case "*":
@@ -170,9 +174,34 @@ public class Calculator {
             if (isOperator(token))
             {
                 // Pop the two top entries
+                double a = calcStack.pop();
+                double b = calcStack.pop();
 
                 // Calculate intermediate results
-                result = 0.0;
+                switch(token){
+                    case "ROOT":
+                        result = Math.pow(a, (1/b));
+                        break;
+                    case "+":
+                        result = a + b;
+                        break;
+                    case "-":
+                        result = b - a;
+                        break;
+                    case "*":
+                        result = b * a;
+                        break;
+                    case "/":
+                        result = b / a;
+                        break;
+                    case "%":
+                        result = b % a;
+                    case "^":
+                        result = Math.pow(b,a);
+                        break;
+                    default:
+                        break;
+                }
 
                 // Push intermediate result back onto the stack
                 calcStack.push( result );
@@ -193,6 +222,22 @@ public class Calculator {
                 "Tokenized expression: " + this.tokens.toString() + "\n" +
                 "Reverse Polish Notation: " +this.reverse_polish.toString() + "\n" +
                 "Final result: " + String.format("%.2f", this.result));
+    }
+
+    private void parenthesesCheck(){
+        int leftP = 0;
+        int rightP = 0;
+        for (int i = 0; i < this.expression.length(); i++){
+            if (this.expression.charAt(i) == '('){
+                leftP++;
+            } else if (this.expression.charAt(i) == ')'){
+                rightP++;
+            }
+        }
+
+        if(leftP != rightP){
+            throw new RuntimeException("Make sure all of your parentheses have another one to go with it!");
+        }
     }
 
     // Tester method
@@ -221,5 +266,14 @@ public class Calculator {
         Calculator divisionMath = new Calculator("300/200");
         System.out.println("Division Math\n" + divisionMath);
 
+        System.out.println();
+
+        Calculator powerMath = new Calculator("2^4");
+        System.out.println("Power Math\n" + powerMath);
+
+        System.out.println();
+
+        System.out.println("Parentheses imbalance error:");
+        Calculator parenthesesError = new Calculator("((100+200)*3");
     }
 }
