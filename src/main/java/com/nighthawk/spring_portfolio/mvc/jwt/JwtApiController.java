@@ -32,7 +32,9 @@ public class JwtApiController {
 
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody Person authenticationRequest) throws Exception {
+		System.out.println("------------ 11111111111");
 		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+		System.out.println("------------ 12222222222");
 		final UserDetails userDetails = personDetailsService
 				.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
