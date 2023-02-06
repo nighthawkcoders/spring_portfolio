@@ -17,7 +17,7 @@
     const searchBtn = document.getElementById("searchBtn");
     searchBtn.addEventListener("click", function() {
       const foodName = document.getElementById("foodName").value;
-      fetch(`http://localhost:8085/api/nutrition/${foodName}`)
+      fetch(`http://localhost:8085/api/nutData/${foodName}`)
         .then(response => response.json())
         .then(data => {
           const foodData = document.getElementById("foodData");
