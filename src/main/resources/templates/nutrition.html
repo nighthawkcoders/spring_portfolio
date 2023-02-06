@@ -11,7 +11,7 @@
     <input type="text" id="foodName" name="foodName">
     <button type="button" id="searchBtn">Search</button>
   </form>
-  <p th:text="Nutrition for " + ${foodName} ></p>
+  <p th:text='Nutrition for ' + ${foodName} ></p>
   <div id="foodData"></div>
   <script>
     const searchBtn = document.getElementById("searchBtn");
