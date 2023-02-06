@@ -29,7 +29,7 @@ public class JokesApiController {
      * @PutMapping annotation is used for mapping HTTP PUT requests onto specific handler methods.
      * @PathVariable annotation extracts the templated part {id}, from the URI
      */
-    @PutMapping("/like/{id}")
+    @PostMapping("/like/{id}")
     public ResponseEntity<Jokes> setLike(@PathVariable long id) {
         /* 
         * Optional (below) is a container object which helps determine if a result is present. 
@@ -49,7 +49,7 @@ public class JokesApiController {
 
     /* Update Jeer
      */
-    @PutMapping("/jeer/{id}")
+    @PostMapping("/jeer/{id}")
     public ResponseEntity<Jokes> setJeer(@PathVariable long id) {
         Optional<Jokes> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
