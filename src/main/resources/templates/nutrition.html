@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nutrition</title>
+</head>
+<body>
+  <h1>Nutrition Search</h1>
+  <form action="/Nutrition" method="GET" id="nutForm">
+    <label for="foodName">Enter food name:</label>
+    <input type="text" id="foodName" name="foodName">
+    <button type="button" id="searchBtn">Search</button>
+  </form>
+  <p th:text="'Nutrition for ' + ${foodName} + '!'"></p>
+  <div id="foodData"></div>
+  <script>
+    const searchBtn = document.getElementById("searchBtn");
+    searchBtn.addEventListener("click", function() {
+      const foodName = document.getElementById("foodName").value;
+      fetch(`http://localhost:8085/api/nutrition/${foodName}`)
+        .then(response => response.json())
+        .then(data => {
+          const foodData = document.getElementById("foodData");
+          foodData.innerHTML = JSON.stringify(data);
+        })
+        .catch(error => console.error(error));
+    });
+  </script>
+</body>
+</html>
+
+
