@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class Nutrition {
 
     // @GetMapping handles GET request for /greet, maps it to greeting() method
-    @GetMapping("/Nutrition")
+    @GetMapping("/nutrition")
     // @RequestParam handles variables binding to frontend, defaults, etc
-    public String getFood(@RequestParam(name="foodName", required=false, defaultValue="Apple") String foodName, Model model) {
+    public String nutrition(@RequestParam(name="foodName", required=false, defaultValue="Apple") String foodName, Model model) {
 
         // model attributes are visible to Thymeleaf when HTML is "pre-processed"
         model.addAttribute("name", foodName);
