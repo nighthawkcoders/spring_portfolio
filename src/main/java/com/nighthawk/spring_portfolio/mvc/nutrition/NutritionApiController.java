@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/*
 @RestController // annotation to create a RESTful web services
 @RequestMapping("/api/nutData")  //prefix of API
 public class NutritionApiController {
@@ -57,7 +58,7 @@ public class NutritionApiController {
 
 
 
-/*import java.io.BufferedReader;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
