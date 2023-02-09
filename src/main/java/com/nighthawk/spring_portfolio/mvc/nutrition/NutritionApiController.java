@@ -23,7 +23,8 @@ public class NutritionApiController {
 
         
         if(foodName != null && foodName != "") {
-
+            
+        try {
             URL url = new URL("https://api.nutritionix.com/v1_1/search/" + foodName + "?results=0:1&fields=*&appId=8c64d3f3&appKey=cf6e93bfdd30f35a3064a9ad0ae2c250");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -50,8 +51,8 @@ public class NutritionApiController {
             System.out.println("Error: " + e.getMessage());
         }
     }
-}/
-\
+}
+
 
 
 
