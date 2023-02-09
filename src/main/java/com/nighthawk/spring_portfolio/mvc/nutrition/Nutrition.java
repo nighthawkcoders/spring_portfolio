@@ -1,4 +1,4 @@
-package com.nighthawk.spring_portfolio.controllers;
+package com.nighthawk.spring_portfolio.mvc.nutrition;
 /* MVC code that shows defining a simple Model, calling View, and this file serving as Controller
  * Web Content with Spring MVCSpring Example: https://spring.io/guides/gs/serving-web-con
  */
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class Nutrition {
 
     // @GetMapping handles GET request for /greet, maps it to greeting() method
-    @GetMapping("/nutrition")
+    @GetMapping("/nut")
     // @RequestParam handles variables binding to frontend, defaults, etc
     public String nutrition(@RequestParam(name="foodName", required=false, defaultValue="Apple") String foodName, Model model) {
 
@@ -20,7 +20,7 @@ public class Nutrition {
         model.addAttribute("name", foodName);
 
         // load HTML VIEW (greet.html)
-        return "nutrition"; 
+        return "nut"; 
 
     }
 

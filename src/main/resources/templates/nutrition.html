@@ -5,7 +5,7 @@
 </head>
 <body>
   <h1>Nutrition Search</h1>
-  <form action="/nutrition" method="GET" id="nutForm">
+  <form action="/nut" method="GET" id="nutForm">
     <label for="foodName">Enter food name:</label>
     <input type="text" id="foodName" name="foodName">
     <button type="button" id="searchBtn">Search</button>
@@ -16,7 +16,7 @@
     const searchBtn = document.getElementById("searchBtn");
     searchBtn.addEventListener("click", function() {
       const foodName = document.getElementById("foodName").value;
-      fetch(`http://localhost:8085/api/nutData/${foodName}`)
+      fetch(`http://localhost:8085/api/nutrition/findCalories/${foodName}`)
         .then(response => response.json())
         .then(data => {
           const foodData = document.getElementById("foodData");
