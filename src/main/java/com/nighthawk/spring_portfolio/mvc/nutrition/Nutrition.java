@@ -20,7 +20,7 @@ public class Nutrition {
         model.addAttribute("name", foodName);
 
         // load HTML VIEW (greet.html)
-        return "nut"; 
+        return "nutrition"; 
 
     }
 
