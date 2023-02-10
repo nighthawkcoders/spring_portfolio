@@ -2,7 +2,7 @@ package com.nighthawk.spring_portfolio.mvc.nutrition;
 
 public class Food {
     private String food;
-    private int findCalories;
+    private double findCalories;
 
     // zero argument constructor
     public Food() {} 
@@ -17,7 +17,7 @@ public class Food {
     }
 
     /* findCalories getter/setters */
-    public int getFindCalories(String food) {
+    public double getFindCalories(String food) {
         return FoodAPI.findCalories(food);
     }
     private void setFindCalories(String Food) {  // this is private to avoid tampering
@@ -34,6 +34,7 @@ public class Food {
         return findCaloriesToString(); 
     }
 
+    /** Tester method */
     public static void main(String[] args) {
         Food food = new Food();
         food.setFood("apple");

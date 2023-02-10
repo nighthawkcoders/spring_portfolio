@@ -11,7 +11,7 @@ import java.net.URL;
 
 public class FoodAPI {
     /** takes food name as input, gets int calories from API */          
-    public static int findCalories(String food) {
+    public static double findCalories(String food) {
         String calories = "";
         if(food != null && food != "") {
             try{
@@ -45,7 +45,7 @@ public class FoodAPI {
                 e.printStackTrace();
             }
         } 
-        return Integer.parseInt(calories);
+        return Double.parseDouble(calories);
 
     }
         
@@ -54,7 +54,7 @@ public class FoodAPI {
     public static void main(String[] args) {
         // Public access modifiers
 
-        FoodAPI.findCalories("cupcake");
+        System.out.println(String.valueOf(FoodAPI.findCalories("cupcake")));
         //String cal = Integer.toString(FoodAPI.findCalories("potato"));
         //System.out.println("Calories: " + cal);
     }
