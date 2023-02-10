@@ -8,14 +8,14 @@ public class FoodAPI {
     public static int findCalories(String food) {
         // implementation not shown
 
-        return 0;
+        return 5;
     }
         
     
     /** Tester method */
     public static void main(String[] args) {
         // Public access modifiers
-        System.out.println("isLeapYear: " + FoodAPI.findCalories("apple"));
+        System.out.println("findCalories: " + FoodAPI.findCalories("apple"));
     }
 }
 

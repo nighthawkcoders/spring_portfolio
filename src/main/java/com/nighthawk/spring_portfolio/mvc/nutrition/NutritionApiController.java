@@ -23,7 +23,7 @@ public class NutritionApiController {
      */
 
     @GetMapping("/findCalories/{food}")
-    public ResponseEntity<JsonNode> findCalories(@PathVariable String food) throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<JsonNode> getFindCalories(@PathVariable String food) throws JsonMappingException, JsonProcessingException {
         // Backend Food Object
         Food food_obj = new Food();
         food_obj.setFood(food);  // evaluates Leap Year
