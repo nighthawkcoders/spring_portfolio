@@ -1,5 +1,6 @@
 package com.nighthawk.spring_portfolio;
 
+import org.springframework.lang.NonNull;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -12,7 +13,7 @@ import jakarta.servlet.ServletRegistration;
 public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
-    public void onStartup(ServletContext sc) throws ServletException {
+    public void onStartup(@NonNull ServletContext sc) throws ServletException {
 
         ServletRegistration.Dynamic appServlet = sc.addServlet("mvc", new DispatcherServlet(
                 new GenericWebApplicationContext()));
