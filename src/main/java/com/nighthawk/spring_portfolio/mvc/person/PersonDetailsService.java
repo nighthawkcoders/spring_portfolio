@@ -102,16 +102,6 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         }
     }
 
-
-    /* Roles Section */
-
-    public void saveRole(PersonRole role) {
-        PersonRole roleObj = personRoleJpaRepository.findByName(role.getName());
-        if (roleObj == null) {  // only add if it is not found
-            personRoleJpaRepository.save(role);
-        }
-    }
-
     public  List<PersonRole>listAllRoles() {
         return personRoleJpaRepository.findAll();
     }

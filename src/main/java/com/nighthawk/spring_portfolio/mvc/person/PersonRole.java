@@ -17,4 +17,8 @@ public class PersonRole {
 
     @Column(unique=true)
     private String name;
+
+    public PersonRole (String name) {
+        this.name = name;
+    }
 }
