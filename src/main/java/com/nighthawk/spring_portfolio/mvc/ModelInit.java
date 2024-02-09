@@ -12,6 +12,7 @@ import com.nighthawk.spring_portfolio.mvc.jokes.JokesJpaRepository;
 import com.nighthawk.spring_portfolio.mvc.note.Note;
 import com.nighthawk.spring_portfolio.mvc.note.NoteJpaRepository;
 import com.nighthawk.spring_portfolio.mvc.person.Person;
+import com.nighthawk.spring_portfolio.mvc.person.PersonDetailsService;
 import com.nighthawk.spring_portfolio.mvc.person.PersonJpaRepository;
 import com.nighthawk.spring_portfolio.mvc.person.PersonRole;
 import com.nighthawk.spring_portfolio.mvc.person.PersonRoleJpaRepository;
@@ -25,7 +26,7 @@ public class ModelInit {
     @Autowired JokesJpaRepository jokesRepo;
     @Autowired NoteJpaRepository noteRepo;
     @Autowired PersonRoleJpaRepository roleJpaRepository;
-    @Autowired PersonJpaRepository personJpaRepository;
+    @Autowired PersonDetailsService personDetailsService;
 
     @Bean
     @Transactional
@@ -44,7 +45,7 @@ public class ModelInit {
             Person[] personArray = Person.init();
             for (Person person : personArray) {
                 // Name and email are used to lookup the person
-                List<Person> personFound = personJpaRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(person.getName(), person.getEmail());  // lookup
+                List<Person> personFound = personDetailsService.list(person.getName(), person.getEmail());  // lookup
                 if (personFound.size() == 0) { // add if not found
                     // Roles are added to the database if they do not exist
                     List<PersonRole> updatedRoles = new ArrayList<>();
@@ -63,7 +64,7 @@ public class ModelInit {
                     person.setRoles(updatedRoles); // Object reference is updated
 
                     // Save person to database
-                    personJpaRepository.save(person); // JPA save
+                    personDetailsService.save(person); // JPA save
 
                     // Add a "test note" for each new person
                     String text = "Test " + person.getEmail();
