@@ -1,12 +1,20 @@
 package com.nighthawk.spring_portfolio.mvc.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.nighthawk.spring_portfolio.mvc.person.PersonApiController.PersonDto;
+
+import jakarta.validation.Valid;
+import lombok.Getter;
+
 import java.util.*;
+import java.util.stream.Collectors;
 import java.text.SimpleDateFormat;
 
 @RestController
@@ -51,7 +59,7 @@ public class PersonApiController {
     /*
     DELETE individual Person using ID
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Person> deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
@@ -63,24 +71,33 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
     }
 
+    /* DTO (Data Transfer Object) to support POST request for postPerson method
+       .. represents the data in the request body
+     */
+    @Getter 
+    public static class PersonDto {
+        private String email;
+        private String password;
+        private String name;
+        private String dob;
+    }
+
     /*
     POST Aa record by Requesting Parameters from URI
      */
-    @PostMapping( "/")
-    public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
-                                             @RequestParam("password") String password,
-                                             @RequestParam("name") String name,
-                                             @RequestParam("dob") String dobString) {
+    @PostMapping("/")
+    public ResponseEntity<Object> postPerson(@RequestBody PersonDto personDto) {
+        // Validate dob input
         Date dob;
         try {
-            dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
+            dob = new SimpleDateFormat("MM-dd-yyyy").parse(personDto.getDob());
         } catch (Exception e) {
-            return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(personDto.getDob() + " error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
         }
-        // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob, personDetailsService.findRole("USER"));
+        // A person object WITHOUT ID will create a new record in the database
+        Person person = new Person(personDto.getEmail(), personDto.getPassword(), personDto.getName(), dob, personDetailsService.findRole("USER"));
         personDetailsService.save(person);
-        return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(personDto.getEmail() + " is created successfully", HttpStatus.CREATED);
     }
 
     /*

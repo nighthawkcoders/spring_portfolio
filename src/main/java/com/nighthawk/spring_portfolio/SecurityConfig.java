@@ -7,7 +7,7 @@ import com.nighthawk.spring_portfolio.mvc.person.PersonDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -69,9 +69,10 @@ public class SecurityConfig {
 				)
 				// list the requests/endpoints need to be authenticated
 				.authorizeHttpRequests(auth -> auth
+				    .requestMatchers(HttpMethod.POST, "/api/person/**").permitAll()
+					.requestMatchers(HttpMethod.DELETE, "/api/person/**").authenticated()
 					.requestMatchers("/authenticate").permitAll()
 					.requestMatchers("/mvc/person/update/**", "/mvc/person/delete/**").authenticated()
-					.requestMatchers("/api/person/post/**", "/api/person/delete/**").authenticated()
 					.requestMatchers("/**").permitAll()
 				)
 				// support cors
