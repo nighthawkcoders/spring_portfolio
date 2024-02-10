@@ -2,6 +2,7 @@ package com.nighthawk.spring_portfolio.mvc.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +37,9 @@ public class JwtApiController {
 		final UserDetails userDetails = personDetailsService
 				.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		if (token == null) {
+			return new ResponseEntity<>("Token generation failed", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		final ResponseCookie tokenCookie = ResponseCookie.from("jwt", token)
 			.httpOnly(true)
 			.secure(true)
@@ -44,7 +48,7 @@ public class JwtApiController {
 			.sameSite("None; Secure")
 			// .domain("example.com") // Set to backend domain
 			.build();
-		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).build();
+		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).body(authenticationRequest.getEmail() + " was authenticated successfully");
 	}
 
 	private void authenticate(String username, String password) throws Exception {
