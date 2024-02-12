@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Base64;
 import java.util.function.Function;
@@ -52,9 +53,21 @@ public class JwtTokenUtil {
 		return expiration.before(new Date());
 	}
 
-	//generate token for user
-	public String generateToken(UserDetails userDetails) {
+	// Generate token for user
+	public String generateToken(UserDetails userDetails, List<String> roles) {
+		// Create a map to store JWT claims, 
+		// ... a claim is information asserted about the logged in user
 		Map<String, Object> claims = new HashMap<>();
+		
+		// Add a custom claim to the JWT token,
+		// ... roles are added for the client/frontend to know what the user can do, 
+		// ... adding roles to login avoides an extra request to the server
+		claims.put("roles", roles);
+		
+		// Call doGenerateToken method to create the JWT token and set the standard claims
+		// "sub" (subject) will be the username of the user.
+		// "iat" (issued at) will be the current time.
+		// "exp" (expiration time) will be the current time plus the configured token validity.
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
