@@ -71,6 +71,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 					.requestMatchers(HttpMethod.POST,"/authenticate").permitAll()
 				    .requestMatchers(HttpMethod.POST, "/api/person/**").permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/person/**").authenticated()
+					.requestMatchers(HttpMethod.PUT, "/api/person/**").authenticated()
 					.requestMatchers(HttpMethod.DELETE, "/api/person/**").hasAuthority("ROLE_ADMIN")
 					.requestMatchers("/mvc/person/create/**").permitAll()
 					.requestMatchers("/mvc/person/read/**").authenticated()
