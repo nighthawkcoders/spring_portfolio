@@ -73,6 +73,7 @@ public class SecurityConfig {
 				    .requestMatchers(HttpMethod.POST, "/api/person/**").permitAll()
 					.requestMatchers(HttpMethod.DELETE, "/api/person/**").hasAuthority("ROLE_ADMIN")
 					.requestMatchers("/mvc/person/create/**").permitAll()
+					.requestMatchers("/mvc/person/read/**").authenticated()
 					.requestMatchers("/mvc/person/update/**").authenticated()
 					.requestMatchers( "/mvc/person/delete/**").hasAuthority("ROLE_ADMIN")
 					.requestMatchers("/**").permitAll()
