@@ -17,7 +17,7 @@
         <java.version>17</java.version>
         <!-- Thymeleaf 3 -->
         <org.thymeleaf-version>3.1.2.RELEASE</org.thymeleaf-version>
-        <org.thymeleaf.extras.springsecurity5-version>3.1.2.RELEASE</org.thymeleaf.extras.springsecurity5-version>
+        <org.thymeleaf.extras.springsecurity-version>3.1.2.RELEASE</org.thymeleaf.extras.springsecurity-version>
         <nz.net.ultraq.thymeleaflayout-version>3.3.0</nz.net.ultraq.thymeleaflayout-version>
         <thymeleaf-extras-java8time-version>3.0.4.RELEASE</thymeleaf-extras-java8time-version>
     </properties>
@@ -73,7 +73,7 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
             <!-- TODO Remove version once available in platform BOM -->
-            <version>${org.thymeleaf.extras.springsecurity5-version}</version>
+            <version>${org.thymeleaf.extras.springsecurity-version}</version>
         </dependency>
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
