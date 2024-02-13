@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-
-<!-- Begin navigation fragments -->
+<!-- Bootstrap Navigation Code -->
 <th:block xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
         <div class="container-fluid">
             <div class="btn-group">
                 <img alt="" class="d-inline-block align-center"
-                        src=""
-                        th:src="@{/images/ncs_logo.png}"
-                        height="50"
-                        width="auto">
+                     src=""
+                     th:src="@{/images/ncs_logo.png}"
+                     height="50"
+                     width="auto">
                 <a class="navbar-brand" th:href="@{https://nighthawkcodingsociety.com}">Nighthawk Coders</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -38,6 +37,22 @@
                     </ul>
                 </div>
 
+
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown2">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Database
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink2">
+                                <li><a class="dropdown-item" th:href="@{/database/person}">SQL Person</a></li>
+                                <li><a class="dropdown-item" th:href="@{/database/person/search}">SQL Person Search</a></li>
+                                <li><a class="dropdown-item" th:href="@{/database/scrum}">SQL Scrum</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
 
 
@@ -47,17 +62,18 @@
                     <input id="search" type="search" placeholder="Search" aria-label="Search">
                 </div>
                 <!-- Clock display -->
-                <div class="px-3 text-dark">
-                    <span id="clock"></span>
-                </div>
-
+                <!--                <div class="px-3 text-dark">-->
+                <!--                    <span id="clock"></span>-->
+                <!--                </div>-->
                 <!-- Login/Logout -->
-                <!--
+                <!-- If the user is not authenticated, display a "Login" link -->
                 <th:block sec:authorize="isAnonymous()">
                     <div class="px-3">
                         <a th:href='@{/login}' class="link-dark">Login</a>
+
                     </div>
                 </th:block>
+                <!-- If the user is authenticated, display a dropdown with the user's username and roles, and a "Logout" link -->
                 <th:block sec:authorize="isAuthenticated()">
                     <div class="dropdown px-3">
                         <span sec:authentication="name" class="dropdown-toggle link-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,15 +83,14 @@
                                 <div class="dropdown-item">
                                     <p style="margin-bottom:2px"><strong>ROLES:</strong></p>
                                     <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('ADMIN')">ADMIN</p>
-                                    <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('TEACHER')">TEACHER</p>
-                                    <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('STUDENT')">STUDENT</p>
+                                    <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('USER')">USER</p>
+                                    <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('TESTER')">TESTER</p>
                                 </div>
                             </li>
                             <li><a class="dropdown-item active" th:href='@{/logout}'>Logout</a></li>
                         </ul>
                     </div>
                 </th:block>
-                -->
 
 
                 <!-- Dark mode action -->
@@ -117,19 +132,6 @@
                 }
                 search.addEventListener('keypress', submitted);
 
-                // Clock Control
-                // clockElement global element set for convenience
-                let clockElement = document.getElementById('clock');
-                // Execute clock function on load
-                clock();
-                // Clock update executes on each interval set by timer
-                function clock() {
-                    let date = new Date();
-                    clockElement.textContent = date.toLocaleString();
-                }
-                // Clock refresh timer, a reoccurring event
-                setInterval(clock, 1000);
-                // End Clock Control
 
                 // Dark Mode Control
                 // darkSwitch global element is set for convenience
@@ -157,7 +159,12 @@
                 }
                 // End Dark Mode Control
 
+
+
+
             </script>
+
         </div>
     </nav>
+
 </th:block>
