@@ -4,6 +4,4 @@ public enum Climate {
     TEMPERATE,
     SUBTROPICAL,
     TROPICAL;
-
-    
 }
