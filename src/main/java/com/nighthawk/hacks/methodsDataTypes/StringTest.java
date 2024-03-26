@@ -39,6 +39,6 @@ public class StringTest {
         changeString(s, sObject); // stack by value, heap by value, heap by reference
         
         System.out.println("main method after: s = " + s + ", hash = " + System.identityHashCode(s));
-        System.out.println("main method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject));
+        System.out.println("main method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
     }
 }
