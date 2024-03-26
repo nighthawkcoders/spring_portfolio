@@ -25,22 +25,22 @@ public class StringTest {
         sValue = 'A' + sValue.substring(1);
         // sObject.s[0] = 'A'; // not allowed
         sObject.s = 'A' + sObject.s.substring(1);
-        System.out.println("\t changeString method after: sValue = " + sValue + ", hash = " + System.identityHashCode(sValue));
-        System.out.println("\t changeString method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
+        System.out.println("\t changeString method after: sValue = " + sValue + ", hash = " + System.identityHashCode(sValue)); // new string object
+        System.out.println("\t changeString method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s)); // new string object, not interned in string pool
     }
 
     public static void main(String[] args) {
         String s = "abc"; // String data type on the stack
         StringTest sObject = new StringTest();
         
-        System.out.println("main method before: s = " + s + ", hash = " + System.identityHashCode(s));
-        System.out.println("main method before: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
+        System.out.println("main method before: s = " + s + ", hash = " + System.identityHashCode(s)); //stack literal from string pool
+        System.out.println("main method before: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s)); //staic literal from string pool
         System.out.println("main method before: sObject = " + sObject + ", hash = " + System.identityHashCode(sObject));
     
         changeString(s, sObject); // stack by value, heap by value, heap by reference
         
         System.out.println("main method after: s = " + s + ", hash = " + System.identityHashCode(s));
         System.out.println("main method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
-        System.out.println("main method after: sObject = " + sObject + ", hash = " + System.identityHashCode(sObject));
+        System.out.println("main method after: sObject = " + sObject + ", hash = " + System.identityHashCode(sObject)); // shows that changing sObject.s does not change the reference to the object
     }
 }
