@@ -34,11 +34,13 @@ public class StringTest {
         StringTest sObject = new StringTest();
         
         System.out.println("main method before: s = " + s + ", hash = " + System.identityHashCode(s));
-        System.out.println("main method before: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject));
+        System.out.println("main method before: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
+        System.out.println("main method before: sObject = " + sObject + ", hash = " + System.identityHashCode(sObject));
     
         changeString(s, sObject); // stack by value, heap by value, heap by reference
         
         System.out.println("main method after: s = " + s + ", hash = " + System.identityHashCode(s));
         System.out.println("main method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
+        System.out.println("main method after: sObject = " + sObject + ", hash = " + System.identityHashCode(sObject));
     }
 }
