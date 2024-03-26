@@ -30,14 +30,19 @@ public class StringTest {
     }
 
     public static void main(String[] args) {
-        String s = "abc"; // String data type on the stack
+        /*
+         * Equivalent to:
+         * String s = new String("abc");
+         */
+        String s = "abc"; // String data type on the heap, but char array is immutable (java reason: security and performance)
+        // StringTest object is a new object that is created on the heap
         StringTest sObject = new StringTest();
         
         System.out.println("main method before: s = " + s + ", hash = " + System.identityHashCode(s)); //stack literal from string pool
         System.out.println("main method before: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s)); //staic literal from string pool
         System.out.println("main method before: sObject = " + sObject + ", hash = " + System.identityHashCode(sObject));
     
-        changeString(s, sObject); // stack by value, heap by value, heap by reference
+        changeString(s, sObject); // s is a heap value but char array is immutable, sObject is a heap reference to StringTest object
         
         System.out.println("main method after: s = " + s + ", hash = " + System.identityHashCode(s));
         System.out.println("main method after: sObject.s = " + sObject.s + ", hash = " + System.identityHashCode(sObject.s));
