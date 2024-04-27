@@ -48,7 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		Optional<String> jwtToken = getJwtTokenFromCookies(request.getCookies());
 	
 		if (!jwtToken.isPresent()) {
-			logger.warn("No JWT cookie");
+			//logger.warn("No JWT cookie");
 			chain.doFilter(request, response);
 			return;
 		}
@@ -63,6 +63,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+					if (request.getRequestURI().contains("api") || request.getRequestURI().contains("mvc") ) {
+						logger.warn(userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+					}
 				}
 			}
 		} catch (IllegalArgumentException e) {
@@ -85,7 +88,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	 */
 	private Optional<String> getJwtTokenFromCookies(Cookie[] cookies) {
 		if (cookies == null || cookies.length == 0) {
-			logger.warn("No cookies");
+			//logger.warn("No cookies");
 			return Optional.empty();
 		}
 	
