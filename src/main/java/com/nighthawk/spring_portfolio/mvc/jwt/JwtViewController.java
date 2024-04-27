@@ -62,6 +62,7 @@ public class JwtViewController {
 
 	@PostMapping("/authenticateForm")
 	public String createAuthenticationTokenForm(@ModelAttribute Person authenticationRequest, Model model) throws Exception {
+		logger.warn("Email: " + authenticationRequest.getEmail() + " Password: " + authenticationRequest.getPassword());
 		try {
 			authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 			final UserDetails userDetails = personDetailsService
