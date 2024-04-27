@@ -63,9 +63,6 @@ public class SecurityConfig {
 		@Bean
 		public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 			http
-				.csrf(csrf -> csrf
-					.disable()
-				)
 				// list the requests/endpoints need to be authenticated
 				.authorizeHttpRequests(auth -> auth
 					.requestMatchers(HttpMethod.POST,"/authenticate/**").permitAll()
