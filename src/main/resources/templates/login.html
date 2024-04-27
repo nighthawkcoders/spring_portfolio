@@ -22,40 +22,16 @@
 
         <div class="container bg-secondary py-4">
             <div class="p-5 mb-4 bg-light text-dark rounded-3">
-                <h1>Login</h1>
-                <label for="email">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="password">Password:</label><br>
-                <input type="text" id="password" name="password"><br><br>
-                <input type="submit" value="Login" onclick="login()">
-                <p id="message"></p>
+                <form action="#" th:action="@{/authenticateForm}" th:object="${person}" method="post">
+                    <label for="email">Email:</label><br>
+                    <input type="text" id="email" name="email" th:field="*{email}"><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" th:field="*{password}"><br><br>
+                    <input type="submit" value="Login">
+                </form>
             </div>
+            <p th:if="${error}" th:text="${error}" class="error"></p>
         </div>
-        <script>
-            function login() {
-                var email = document.getElementById('username').value;
-                var password = document.getElementById('password').value;
-                var data = {email:email, password:password};
-                const fetchOptions = {
-                    method: 'POST',
-                    mode: 'cors', // no-cors, *cors, same-origin
-                    cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                    credentials: 'include', // include, same-origin, omit
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-
-                };
-                fetch("/authenticate", fetchOptions).then((data) => {
-                    if (data.status == 200) {
-                        window.location.replace("/mvc/person/read");
-                    } else {
-                        document.getElementById('message').innerHTML = "Invalid email or password"
-                    }
-                });
-            }
-        </script>
 
     </div>
 
