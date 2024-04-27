@@ -52,7 +52,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			chain.doFilter(request, response);
 			return;
 		}
-	
+
+		if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
+			logger.warn( request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+		}
+
 		try {
 			String username = jwtTokenUtil.getUsernameFromToken(jwtToken.get());
 	
@@ -63,8 +67,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-					if (request.getRequestURI().contains("api") || request.getRequestURI().contains("mvc") ) {
-						logger.warn(userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+					if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
+						logger.warn(userDetails.getUsername() + " " + userDetails.getAuthorities() );
 					}
 				}
 			}
