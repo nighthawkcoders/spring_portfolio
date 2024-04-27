@@ -33,7 +33,7 @@
 
 <script th:inline="javascript">
   /*<![CDATA[*/
-      document.cookie = "jwt=" + /*[[${token}]]*/ + "; path=/; max-age=3600; secure; samesite=None";
+      document.cookie = "jwt=" + /*[[${token}]]*/ + "; path=/; max-age=3600; secure; samesite=Lax";
   /*]]>*/
 </script>
 </body>

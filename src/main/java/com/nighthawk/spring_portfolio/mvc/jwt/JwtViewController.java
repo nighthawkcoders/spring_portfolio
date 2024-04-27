@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.nighthawk.spring_portfolio.mvc.person.Person;
 import com.nighthawk.spring_portfolio.mvc.person.PersonDetailsService;
-
 
 @Controller
 public class JwtViewController {
@@ -32,6 +34,8 @@ public class JwtViewController {
 
 	@Autowired
 	private PersonDetailsService personDetailsService;
+
+	private static final Logger logger = LoggerFactory.getLogger(JwtViewController.class);
 
 	private void authenticate(String username, String password) throws Exception {
 		try {
@@ -73,6 +77,7 @@ public class JwtViewController {
 
 			// If you want to set a cookie, you'll need to do it in the client's browser
 			// You can add the token to the model and set the cookie in JavaScript
+			logger.warn( userDetails.getUsername() + " " + userDetails.getAuthorities()); 
 			model.addAttribute("token", token);
 			model.addAttribute("name", userDetails.getUsername());
 			return "greet"; // redirect to the home page after successful login
