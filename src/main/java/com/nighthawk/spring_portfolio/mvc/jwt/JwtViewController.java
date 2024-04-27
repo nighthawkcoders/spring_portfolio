@@ -41,10 +41,13 @@ public class JwtViewController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
+			logger.error("USER_DISABLED", e);
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
+			logger.error("INVALID_CREDENTIALS", e);
 			throw new Exception("INVALID_CREDENTIALS", e);
 		} catch (Exception e) {
+			logger.error("AUTHENTICATE ERROR", e);
 			throw new Exception(e);
 		}
 	}
