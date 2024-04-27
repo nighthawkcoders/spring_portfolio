@@ -36,7 +36,17 @@
                 var email = document.getElementById('username').value;
                 var password = document.getElementById('password').value;
                 var data = {email:email, password:password};
-                fetch("/authenticate", {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}).then((data) => {
+                const fetchOptions = {
+                    method: 'POST',
+                    cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'include', // include, same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+
+                };
+                fetch("/authenticate", fetchOptions).then((data) => {
                     if (data.status == 200) {
                         window.location.replace("/mvc/person/read");
                     } else {
