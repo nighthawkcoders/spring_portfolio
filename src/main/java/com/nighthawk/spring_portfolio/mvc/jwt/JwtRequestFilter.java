@@ -46,17 +46,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
 		Optional<String> jwtToken = getJwtTokenFromCookies(request.getCookies());
-	
+
+		// If there is no JWT token, continue with the filter chain
 		if (!jwtToken.isPresent()) {
-			//logger.warn("No JWT cookie");
+			if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
+				logger.warn( "No JWT: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+			}
 			chain.doFilter(request, response);
 			return;
 		}
 
-		if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
-			logger.warn( request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
-		}
-
+		// If there is a JWT token, extract the username and set the authentication
 		try {
 			String username = jwtTokenUtil.getUsernameFromToken(jwtToken.get());
 	
@@ -68,7 +68,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 					if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
-						logger.warn(userDetails.getUsername() + " " + userDetails.getAuthorities() );
+						logger.warn( userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 					}
 				}
 			}
