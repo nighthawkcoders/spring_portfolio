@@ -4,26 +4,38 @@
       layout:decorate="~{layouts/base}" lang="en">
 
 <head>
-  <title>Greet</title>
+  <title>Greeting Page</title>
 </head>
 
 <body>
 <th:block layout:fragment="body" th:remove="tag">
   <!-- Start of body content specific to page -->
   <div class="px-4 py-5 my-5">
-    <h3 class="display-5 fw-bold">Type a Greeting</h3>
+    <h3 class="display-5 fw-bold">Welcome!!!</h3>
 
     <form action="/greet" method="GET" id="greetForm">
       <div>
-        <label for="greetField">To whom?</label>
-        <input name="name" id="greetField">
-        <button>Greetings!</button>
-        <p th:text="'Greetings, ' + ${name} + '!'"></p>
+        <div th:if="${name != null}">
+          <p th:text="'Greetings, ' + ${name} + '!'"></p>
+        </div>
+        <div th:if="${name == null}">
+          <label for="greetField">Tell us your name?</label>
+          <input name="name" id="greetField">
+          <button>Greetings!</button>
+        </div>
       </div>
     </form>
+
+
   </div>
   <!-- End of body content specific to page -->
 </th:block>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+      document.cookie = "jwt=" + /*[[${token}]]*/ + "; path=/; max-age=3600; secure; samesite=None";
+  /*]]>*/
+</script>
 </body>
 
 </html>

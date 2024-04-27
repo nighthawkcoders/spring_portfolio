@@ -74,6 +74,7 @@ public class JwtViewController {
 			// If you want to set a cookie, you'll need to do it in the client's browser
 			// You can add the token to the model and set the cookie in JavaScript
 			model.addAttribute("token", token);
+			model.addAttribute("name", userDetails.getUsername());
 			return "greet"; // redirect to the home page after successful login
 		} catch (Exception e) {
 			model.addAttribute("error", "Invalid email or password");
