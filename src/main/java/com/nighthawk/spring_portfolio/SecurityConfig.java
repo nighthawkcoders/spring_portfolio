@@ -77,6 +77,8 @@ public class SecurityConfig {
 					.requestMatchers( "/mvc/person/delete/**").hasAuthority("ROLE_ADMIN")
 					.requestMatchers("/**").permitAll()
 				)
+				// disable CSRF protection for /authenticateForm
+				.csrf(csrf -> csrf.ignoringRequestMatchers("/authenticateForm"))
 				// support cors
 				.cors(Customizer.withDefaults())
 				.headers(headers -> headers
