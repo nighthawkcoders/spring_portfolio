@@ -28,7 +28,6 @@ import org.springframework.security.web.header.writers.StaticHeadersWriter;
 */
 @Configuration
 @EnableWebSecurity  // Beans to enable basic Web security
-@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -57,12 +56,14 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-
 	
     // Provide security configuration
 		@Bean
 		public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 			http
+				.csrf(csrf -> csrf
+					.disable()
+				)
 				// list the requests/endpoints need to be authenticated
 				.authorizeHttpRequests(auth -> auth
 					.requestMatchers(HttpMethod.GET,"/login").permitAll()
@@ -78,8 +79,6 @@ public class SecurityConfig {
 					.requestMatchers( "/mvc/person/delete/**").hasAuthority("ROLE_ADMIN")
 					.requestMatchers("/**").permitAll()
 				)
-				// disable CSRF protection for /authenticateForm
-				.csrf(csrf -> csrf.ignoringRequestMatchers("/authenticateForm"))
 				// support cors
 				.cors(Customizer.withDefaults())
 				.headers(headers -> headers
@@ -92,6 +91,7 @@ public class SecurityConfig {
 				)
 				.formLogin(form -> form 
 					.loginPage("/login")
+					.defaultSuccessUrl("/greet")
 				)
 				.logout(logout -> logout
 					.deleteCookies("jwt")
