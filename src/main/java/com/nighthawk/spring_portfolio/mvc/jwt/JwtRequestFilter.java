@@ -44,7 +44,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	 */
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
-		logger.warn("doFilterInternal entered");
 		Optional<String> jwtToken = getJwtTokenFromCookies(request.getCookies());
 
 		// If there is no JWT token, continue with the filter chain
@@ -52,6 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
 				logger.warn( "No JWT: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 			}
+			logger.warn("doFilterInternal no JWT token");
 			chain.doFilter(request, response);
 			return;
 		}
@@ -74,10 +74,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			}
 		} catch (IllegalArgumentException e) {
 			logger.error("Unable to get JWT Token", e);
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unable to get JWT Token");
+			return;
 		} catch (ExpiredJwtException e) {
 			logger.error("JWT Token has expired", e);
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT Token has expired");
+			return;
 		} catch (Exception e) {
 			logger.error("An error occurred", e);
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "An error occurred");
+			return;
 		}
 	
 		chain.doFilter(request, response);
