@@ -13,29 +13,34 @@
   <div class="px-4 py-5 my-5">
     <h3 class="display-5 fw-bold">Welcome!!!</h3>
 
-    <form action="/greet" method="GET" id="greetForm">
-      <div>
-        <div th:if="${name != null}">
-          <p th:text="'Greetings, ' + ${name} + '!'"></p>
+      <th:block sec:authorize="isAnonymous()">
+        <div class="px-3">
+            <a th:href='@{/login}' class="link-dark">Login</a>
         </div>
-        <div th:if="${name == null}">
-          <label for="greetField">Tell us your name?</label>
-          <input name="name" id="greetField">
-          <button>Greetings!</button>
-        </div>
+      </th:block>
+      
+      <!-- If the user is authenticated, display a dropdown with the user's username and roles, and a "Logout" link -->
+      <th:block sec:authorize="isAuthenticated()">
+          <div class="dropdown px-3">
+              <span sec:authentication="name" class="dropdown-toggle link-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              </span>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                  <li>
+                      <div class="dropdown-item">
+                          <p style="margin-bottom:2px"><strong>ROLES:</strong></p>
+                          <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('ADMIN')">ADMIN</p>
+                          <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('USER')">USER</p>
+                          <p style="font-size:0.75em;margin:1px" sec:authorize="hasRole('TESTER')">TESTER</p>
+                      </div>
+                  </li>
+                  <li><a class="dropdown-item active" th:href='@{/logout}'>Logout</a></li>
+              </ul>
+          </div>
+      </th:block>
       </div>
-    </form>
+      <!-- End of body content specific to page -->
+    </th:block>
 
-
-  </div>
-  <!-- End of body content specific to page -->
-</th:block>
-
-<script th:inline="javascript">
-  /*<![CDATA[*/
-      document.cookie = "jwt=" + /*[[${token}]]*/ + "; path=/; max-age=3600; secure; samesite=Lax";
-  /*]]>*/
-</script>
 </body>
 
 </html>
