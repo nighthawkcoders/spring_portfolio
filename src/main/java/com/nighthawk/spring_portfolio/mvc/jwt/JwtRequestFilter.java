@@ -44,6 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	 */
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
+		logger.warn("doFilterInternal entered");
 		Optional<String> jwtToken = getJwtTokenFromCookies(request.getCookies());
 
 		// If there is no JWT token, continue with the filter chain
