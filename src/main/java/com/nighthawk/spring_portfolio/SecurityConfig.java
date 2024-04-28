@@ -65,6 +65,7 @@ public class SecurityConfig {
 			http
 				// list the requests/endpoints need to be authenticated
 				.authorizeHttpRequests(auth -> auth
+					.requestMatchers(HttpMethod.GET,"/login").permitAll()
 					.requestMatchers(HttpMethod.POST,"/authenticate").permitAll()
 					.requestMatchers(HttpMethod.POST,"/authenticateForm").permitAll()
 				    .requestMatchers(HttpMethod.POST, "/api/person/**").permitAll()

@@ -23,6 +23,7 @@
         <div class="container bg-secondary py-4">
             <div class="p-5 mb-4 bg-light text-dark rounded-3">
                 <form action="#" th:action="@{/authenticateForm}" th:object="${person}" th:method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <label for="email">Email:</label><br>
                     <input type="text" id="email" name="email" th:field="*{email}"><br>
                     <label for="password">Password:</label><br>
