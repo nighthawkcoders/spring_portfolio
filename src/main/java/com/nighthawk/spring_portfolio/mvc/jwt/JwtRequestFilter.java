@@ -48,9 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		// If there is no JWT token, continue with the filter chain
 		if (!jwtToken.isPresent()) {
-			if ( request.getRequestURI().contains("authenticate") ) {
-				logger.warn("doFilterInternal authenticate and no JWT token");
-			}
+			logger.warn("doFilterInternal authenticate and no JWT token: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 			chain.doFilter(request, response);
 			return;
 		}
@@ -66,9 +64,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-					if (! (request.getRequestURI().contains("assets") || request.getRequestURI().contains("images") ) ) {
-						logger.warn( userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
-					}
+					logger.warn( userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 				}
 			}
 		} catch (IllegalArgumentException e) {
