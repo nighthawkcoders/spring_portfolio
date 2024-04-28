@@ -2,6 +2,8 @@ package com.nighthawk.spring_portfolio.mvc.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,9 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         return new BCryptPasswordEncoder();
     }
 
-    /* UserDetailsService Overrides and maps Person & Roles POJO into Spring Security */
+    /* loadUserByUsername Overrides and maps Person & Roles POJO into Spring Security */
     @Override
-    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Person person = personJpaRepository.findByEmail(email); // setting variable user equal to the method finding the username in the database
         if(person==null) {
 			throw new UsernameNotFoundException("User not found with username: " + email);
@@ -43,7 +45,8 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
             authorities.add(new SimpleGrantedAuthority(role.getName())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
         });
         // train spring security to User and Authorities
-        return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), authorities);
+        User user = new User(person.getEmail(), person.getPassword(), authorities);
+        return user;
     }
 
     /* Person Section */
