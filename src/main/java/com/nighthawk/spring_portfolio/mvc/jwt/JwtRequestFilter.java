@@ -48,7 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		// If there is no JWT token, continue with the filter chain
 		if (!jwtToken.isPresent()) {
-			logger.warn("doFilterInternal authenticate and no JWT token: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+			logger.warn("doFilterInternal No JWT token: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 			chain.doFilter(request, response);
 			return;
 		}
