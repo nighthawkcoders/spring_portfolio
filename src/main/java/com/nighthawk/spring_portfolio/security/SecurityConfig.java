@@ -71,9 +71,9 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.GET, "/api/person/**").authenticated()
 					.requestMatchers(HttpMethod.PUT, "/api/person/**").authenticated()
 					.requestMatchers(HttpMethod.DELETE, "/api/person/**").hasAuthority("ROLE_ADMIN")
-					.requestMatchers("/mvc/person/search/**").permitAll()
-					.requestMatchers("/mvc/person/create/**").permitAll()
-					.requestMatchers("/mvc/person/read/**").permitAll()
+					.requestMatchers("/mvc/person/search/**").authenticated()
+					.requestMatchers("/mvc/person/create/**").authenticated()
+					.requestMatchers("/mvc/person/read/**").authenticated()
 					.requestMatchers("/mvc/person/update/**").authenticated()
 					.requestMatchers( "/mvc/person/delete/**").hasAuthority("ROLE_ADMIN")
 					.requestMatchers("/**").permitAll()
@@ -102,7 +102,7 @@ public class SecurityConfig {
 					.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 				)
 				.sessionManagement(session -> session
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 				)
 				// Add a filter to validate the tokens with every request
 				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
