@@ -90,7 +90,7 @@ public class SecurityConfig {
 				)
 				.formLogin(form -> form 
 					.loginPage("/login")
-					.defaultSuccessUrl("/")
+					.defaultSuccessUrl("/mvc/person/read")
 				)
 				.logout(logout -> logout
 					.deleteCookies("jwt")
