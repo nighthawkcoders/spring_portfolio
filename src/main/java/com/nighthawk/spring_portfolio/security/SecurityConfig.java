@@ -88,12 +88,14 @@ public class SecurityConfig {
 					.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "HEAD"))
 					//.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "https://nighthawkcoders.github.io", "http://localhost:4100", "http://127.0.0.1:4100"))
 				)
+				// configure form login for server side authentication
 				.formLogin(form -> form 
 					.loginPage("/login")
 					.defaultSuccessUrl("/mvc/person/read")
 				)
+				// configure logout for server side authentication
 				.logout(logout -> logout
-					.deleteCookies("jwt")
+					.deleteCookies("JSESSIONID")
 					.logoutSuccessUrl("/")
 				)
 				// make sure we use stateless session; 
