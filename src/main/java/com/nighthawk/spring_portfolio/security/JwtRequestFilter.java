@@ -32,10 +32,24 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
+	/**
+	 * This method is responsible for building a log message for the incoming HTTP request.
+	 * @param request  the incoming HTTP request
+	 * @return a string containing the request URI, method, remote address, remote host, and remote port
+	 */	
 	private String buildRequestLogMessage(HttpServletRequest request) {
     	return request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort();
 	}
 
+	/**
+	 * This method works with stateless authentication. 
+	 * It validates the JWT token and sets the authentication.
+	 * @param request  the incoming HTTP request
+	 * @param response
+	 * @param chain
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void handleClientRequest(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		Optional<String> jwtToken = getJwtTokenFromCookies(request.getCookies());
 	
@@ -78,14 +92,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	}
 
 	/**
-	 * This method is responsible for filtering incoming HTTP requests. It extracts the JWT token from the cookies,
-	 * validates the token, and sets the authentication in the security context if the token is valid.
-	 *
+	 * This method is responsible for filtering incoming HTTP requests. 
+	 * API reuests are handled by the handleClientRequest method.
 	 * @param request  the incoming HTTP request
 	 * @param response the HTTP response
 	 * @param chain    the filter chain
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
@@ -93,7 +104,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		// If the request is coming from the client api
     	if (origin != null && origin.equals("client")) {
-			logger.warn("API request: " + buildRequestLogMessage(request));
+			logger.warn("Client request: " + buildRequestLogMessage(request));
 			handleClientRequest(request, response, chain);
 		// Else the request is coming from session
 		} else {
