@@ -45,15 +45,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
 		Optional<String> jwtToken = getJwtTokenFromCookies(request.getCookies());
-
-		// If there is no JWT token, continue with the filter chain
-		if (!jwtToken.isPresent()) {
-			logger.warn("doFilterInternal no JWT cookie: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+		String origin = request.getHeader("X-Origin");
+		
+		// If the request is coming from the client, check if there is a JWT token
+    	if (origin != null && origin.equals("client")) {
+			// If there is no JWT token, leave method and go to filter chain
+			if (!jwtToken.isPresent()) {
+				logger.warn("doFilterInternal client request, no cookie: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+				chain.doFilter(request, response);
+				return;
+			}
+		// Else the request is coming from the server, leave method and go to filter chain
+		} else {
+			logger.warn("doFilterInternal server request: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 			chain.doFilter(request, response);
 			return;
 		}
 
 		// If there is a JWT token, extract the username and set the authentication
+		logger.warn("doFilterInternal client request, with cookie: " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
 		try {
 			String username = jwtTokenUtil.getUsernameFromToken(jwtToken.get());
 	
@@ -64,7 +74,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-					logger.warn( userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI() + " " + request.getMethod() + " " + request.getRemoteAddr() + " " + request.getRemoteHost() + " " + request.getRemotePort());
+					logger.warn( userDetails.getUsername() + " " + userDetails.getAuthorities() + " " + request.getRequestURI());
 				}
 			}
 		} catch (IllegalArgumentException e) {
