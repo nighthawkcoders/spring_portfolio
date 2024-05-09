@@ -149,7 +149,7 @@ public class TermCalculator {
             // else the token is a number push it onto the stack
             else
             {
-                calcStack.push(Double.valueOf(term.getExpression()));
+                calcStack.push(Double.valueOf(term.getValue()));
             }
         }
         // Pop final result and set as final result for expression
