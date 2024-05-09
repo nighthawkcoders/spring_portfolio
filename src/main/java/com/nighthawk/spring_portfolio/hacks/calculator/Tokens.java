@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class Tokens {
     // Terms are stored in map, using Term token as the key
-    private Map<Character, Term> map;
+    private Map<Character, TermOrOperator> map;
 
     // Constructor initializes map
     public Tokens() {
@@ -24,16 +24,16 @@ public class Tokens {
 
     // Put method for adding Parenthesis and Space
     public void put(Character token) {
-        this.map.put(token, new Term(token));
+        this.map.put(token, new TermOrOperator(token));
     }
 
     // Put method for adding Operators, precedence, and calculation
     public void put(Character token, int precedence, BiFunction<Double, Double, Double> calculation) {
-        this.map.put(token, new Term(token, precedence, calculation));
+        this.map.put(token, new TermOrOperator(token, precedence, calculation));
     }
 
     // Get method for retrieving Term based on token lookup  
-    public Term get(Character token) {
+    public TermOrOperator get(Character token) {
         return this.map.get(token);
     }
 
