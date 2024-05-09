@@ -13,12 +13,12 @@ import java.util.HashMap;
  * 
  * A Map is choosen as the data structure because it enables fast lookups of Terms
  */
-public class Terms {
+public class Tokens {
     // Terms are stored in map, using Term token as the key
     private Map<Character, Term> map;
 
     // Constructor initializes map
-    public Terms() {
+    public Tokens() {
         this.map = new HashMap<>();
     }
 

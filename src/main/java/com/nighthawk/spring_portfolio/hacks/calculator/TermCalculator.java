@@ -16,8 +16,8 @@ public class TermCalculator {
     private final String expression;
     private ArrayList<Term> terms = new ArrayList<>();
     private ArrayList<Term> rpnTerms = new ArrayList<>();
-    private Terms operators = new Terms();
-    private Terms seperators = new Terms();
+    private Tokens operators = new Tokens();
+    private Tokens seperators = new Tokens();
     private Double result = 0.0;
 
     public TermCalculator(String expression) {   
