@@ -40,7 +40,7 @@ public class TermCalculator {
 
     // Helper definition for supported operators
     private void initOperators() {
-        // Map<"token", precedence>
+        // Operators contain a token, precedence, and calculation
         operators.put('*', 3, (a, b) -> a * b);
         operators.put('/', 3, (a, b) -> a / b);
         operators.put('%', 3, (a, b) -> a % b);
@@ -50,10 +50,10 @@ public class TermCalculator {
 
     // Helper definition for supported separators
     private void initSeperators() {
-        // Map<"separator", not_used>
-        seperators.put(' ', 0);
-        seperators.put('(', 0);
-        seperators.put(')', 0);
+        // Seperators contain a token 
+        seperators.put(' ');
+        seperators.put('(');
+        seperators.put(')');
     }
 
     // Term Tokenizer takes original expression and converts it to ArrayList of mathematical terms
@@ -159,8 +159,8 @@ public class TermCalculator {
     // Print the expression, terms, and result
     public String toString() {
         return ("Original expression: " + this.expression + "\n" +
-                "Tokenized expression: " + this.terms + "\n" +
-                "Reverse Polish Notation: " +this.rpnTerms + "\n" +
+                "Tokenized expression: " + this.terms.toString() + "\n" +
+                "Reverse Polish Notation: " +this.rpnTerms.toString() + "\n" +
                 "Final result: " + String.format("%.2f", this.result));
     }
 

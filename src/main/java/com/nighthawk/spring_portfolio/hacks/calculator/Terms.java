@@ -19,6 +19,10 @@ public class Terms {
         this.map.put(token, new Term(token, precedence));
     }
 
+    public void put(Character token) {
+        this.map.put(token, new Term(token));
+    }
+
     public Term get(Character token) {
         return this.map.get(token);
     }

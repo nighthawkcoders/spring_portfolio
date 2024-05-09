@@ -40,5 +40,9 @@ public class Token {
     public Double calculate(Double operand1, Double operand2) {
         return this.calculation.apply(operand1, operand2);
     }
+
+    public String toString() {
+        return this.token.toString();
+    }
     
 }

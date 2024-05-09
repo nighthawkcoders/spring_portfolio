@@ -15,6 +15,11 @@ public class Term extends Token {
         this.expression = null;
     }
 
+    public Term(Character token) {
+        super(token, 0);
+        this.expression = null;
+    } 
+
     public Term(String expression) {
         super();
         this.expression = expression;
@@ -23,4 +28,11 @@ public class Term extends Token {
     public String getExpression() {
         return expression;
     }
+
+    public String toString() {
+        if (this.expression == null) {
+            return super.toString();
+        }
+        return this.expression;
+    }   
 }
