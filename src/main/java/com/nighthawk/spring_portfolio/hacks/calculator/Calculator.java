@@ -37,17 +37,32 @@ public class Calculator {
         this.rpnToResult();
     }
 
-    // Helper definition for supported operators
+    /** 
+     * Method to initialize operators, precedence, and calculation
+     * Fundamental to data structures is the ability to store and retrieve data quickly
+     * In this case, we are using a map to store operators and their precedence and calculation methods.
+     * 
+     * Note, that through overloaded methods, we can store operators as Terms with different numbers of arguments
+     * This is specifically useful, in this case, for unary operators like square root
+     */
     private void initOperators() {
-        // Operators contain a token, precedence, and calculation
+        // Operators contain a token, precedence, and calculation using BiFunction
         operators.put('*', 3, (a, b) -> a * b);
         operators.put('/', 3, (a, b) -> a / b);
         operators.put('%', 3, (a, b) -> a % b);
         operators.put('+', 4, (a, b) -> a + b);
         operators.put('-', 4, (a, b) -> a - b);
+        operators.put('^', 2, (a, b) -> Math.pow(a, b)); // Power operation
+        operators.put('√', 1, (a, b) -> Math.sqrt(a), 1); // Square root operation
     }
 
-    // Helper definition for supported separators
+    /**
+     * Method to initialize seperators
+     * Seperators are used to seperate terms 
+     * Additionally, the parenthesis are used to group terms and operations
+     *
+     * Note, that through overloaded methods, we can store seperators as Terms with different numbers of arguments 
+     */
     private void initSeperators() {
         // Seperators contain a token 
         seperators.put(' ');
@@ -55,7 +70,11 @@ public class Calculator {
         seperators.put(')');
     }
 
-    // Term Tokenizer takes original expression and converts it to ArrayList of mathematical terms
+    /**
+     * Term Tokenizer takes original expression and converts it to ArrayList of mathematical terms and values
+     * Populates the this.terms instance of type ArrayList<TermOrOperator>
+     * In essence, this method tokenizes the expression into individual terms/cells in the ArrayList 
+     */ 
     private void termTokenizer() {
         int start = 0;  // term split starting index
         StringBuilder multiCharTerm = new StringBuilder();    // term holder
@@ -65,7 +84,7 @@ public class Calculator {
             if ( operators.contains(c) || seperators.contains(c)  ) {
                 // 1st check for working term and add if it exists
                 if (multiCharTerm.length() > 0) {
-                    terms.add(new TermOrOperator(this.expression.substring(start, i)));
+                    this.terms.add(new TermOrOperator(this.expression.substring(start, i)));
                 }
                 // Add operator or parenthesis term to list
                 TermOrOperator t = operators.get(c);
@@ -73,7 +92,7 @@ public class Calculator {
                     t = seperators.get(c);
                 }
                 if (t != null && t.getToken() != ' ') {
-                    terms.add(t);
+                    this.terms.add(t);
                 }
 
                 // Get ready for next term
@@ -88,11 +107,20 @@ public class Calculator {
         }
         // Add last term
         if (multiCharTerm.length() > 0) {
-            terms.add(new TermOrOperator(this.expression.substring(start)));
+            this.terms.add(new TermOrOperator(this.expression.substring(start)));
         }
     }
 
-    // Takes tokens and converts to Reverse Polish Notation (RPN), this is one where the operator follows its operands.
+    /**
+     * This method populates the this.rpnTerms instance of type ArrayList<TermOrOperator> from the this.terms
+     * Observe the inorder shift from before (terms) to after (termsToRPN) reorder
+     * This reordering is called Reverse Polish Notation (RPN)
+     * The terms are reordered by parenthesis and operator precedence, also called postfix notation
+     * RPN is commonly used in computer science to evaluate mathematical expressions
+     * RPN originated with with the Polish mathematician Jan Łukasiewicz
+     * RPN was later popularized by the Hewlett-Packard company in the 1970s with their scientific calculators
+     * 
+     */ 
     private void termsToRPN () {
         // A stack is used to push and pop calculation for grouping and precedence
         Stack<TermOrOperator> termsStack = new Stack<>();
@@ -125,7 +153,9 @@ public class Calculator {
         }
     }
 
-    // Takes RPN and produces a final result
+    /**
+     * Takes RPN and produces a final result
+     */ 
     private void rpnToResult()
     {
         // stack is used to hold operands and each calculation
@@ -134,15 +164,20 @@ public class Calculator {
         // RPN is processed, ultimately calcStack has final result
         for (TermOrOperator term : this.rpnTerms)
         {
+            Double operand1 = 0.0, operand2 = 0.0, result = 0.0;
+
             // If the token is an operator, calculate
             if (operators.contains(term.getToken()))
             {
-                // Pop the two top entries
-                Double operand2 = calcStack.pop();
-                Double operand1 = calcStack.pop();
-                Double result = term.calculate(operand1, operand2);
-
-                // Push intermediate result back onto the stack
+                if (term.getNumArgs() == 1) {
+                    operand1 = calcStack.pop();
+                } else {
+                    // Pop the two top entries
+                    operand2 = calcStack.pop();
+                    operand1 = calcStack.pop();
+                }
+                // Calculate result and push back onto the stack
+                result = term.calculate(operand1, operand2);
                 calcStack.push( result );
             }
             // else the token is a number push it onto the stack
@@ -188,6 +223,11 @@ public class Calculator {
 
         Calculator divisionMath = new Calculator("300/200");
         System.out.println("Division Math\n" + divisionMath);
+
+        System.out.println();
+
+        Calculator pythagoreanMath = new Calculator("√(3^2 + 4^2)");
+        System.out.println("Pythagorean Theorem\n" + pythagoreanMath);
 
     }
 }

@@ -28,6 +28,11 @@ public class Tokens {
     }
 
     // Put method for adding Operators, precedence, and calculation
+    public void put(Character token, int precedence, BiFunction<Double, Double, Double> calculation, int numArgs) {
+        this.map.put(token, new TermOrOperator(token, precedence, calculation, numArgs));
+    }
+
+    // Put method for adding Operators, precedence, and calculation
     public void put(Character token, int precedence, BiFunction<Double, Double, Double> calculation) {
         this.map.put(token, new TermOrOperator(token, precedence, calculation));
     }

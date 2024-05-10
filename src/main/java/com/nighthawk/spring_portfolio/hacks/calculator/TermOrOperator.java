@@ -25,7 +25,13 @@ public class TermOrOperator extends Token {
 
     // Constructor for operators
     public TermOrOperator(Character token, int precedence, BiFunction<Double, Double, Double> calculation) {
-        super(token, precedence, calculation);
+        super(token, precedence, calculation, 2);
+        this.value = null;
+    }
+
+    // Constructor for operators
+    public TermOrOperator(Character token, int precedence, BiFunction<Double, Double, Double> calculation, int numArgs) {
+        super(token, precedence, calculation, numArgs);
         this.value = null;
     }
 
