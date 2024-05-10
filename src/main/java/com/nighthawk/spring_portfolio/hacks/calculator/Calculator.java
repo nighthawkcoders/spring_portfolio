@@ -19,6 +19,12 @@ public class Calculator {
     private Tokens seperators = new Tokens();
     private Double result = 0.0;
 
+    /**
+     * Calculator constructor to create a calculation object for an expression
+     * This calculates the expression and saves the result and intermediate steps in instance variables
+     * 
+     * @param expression
+     */
     public Calculator(String expression) {   
         // set up tokens used in an calculator
         initOperators();
@@ -154,7 +160,12 @@ public class Calculator {
     }
 
     /**
-     * Takes RPN and produces a final result
+     * The method takes this.rpnTerms and calculates them into a final result
+     * Values proceed the operators, value(s) are popped from the this.rpmTerms and pushed onto the calcStack
+     * Operators are applied to the value(s) in the calcStack and the result is pushed back onto the calcStack 
+     * The final result is the remaining value on the calcStack with the this.rpnTerms is empty 
+     * The final result is stored in this.result 
+     * 
      */ 
     private void rpnToResult()
     {
@@ -190,7 +201,7 @@ public class Calculator {
         this.result = calcStack.pop();
     }
 
-    // Print the expression, terms, and result
+    // Print the expression, terms, and result from the instance variables
     public String toString() {
         return ("Original expression: " + this.expression + "\n" +
                 "Tokenized expression: " + this.terms.toString() + "\n" +
@@ -198,9 +209,8 @@ public class Calculator {
                 "Final result: " + String.format("%.2f", this.result));
     }
 
-    // Tester method
+    // Tester method contains a few examples of mathematical expressions
     public static void main(String[] args) {
-        // Random set of test cases
         Calculator simpleMath = new Calculator("100 + 200  * 3");
         System.out.println("Simple Math\n" + simpleMath);
 
