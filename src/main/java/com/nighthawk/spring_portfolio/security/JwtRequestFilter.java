@@ -128,7 +128,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 	
 		return Arrays.stream(cookies)
-			.filter(cookie -> cookie.getName().equals("jwt"))
+			.filter(cookie -> cookie.getName().equals("jwt_java_spring"))
 			.map(Cookie::getValue)
 			.findFirst();
 	}

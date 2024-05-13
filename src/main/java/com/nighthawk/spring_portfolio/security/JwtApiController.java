@@ -53,7 +53,7 @@ public class JwtApiController {
 			return new ResponseEntity<>("Token generation failed", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		final ResponseCookie tokenCookie = ResponseCookie.from("jwt", token)
+		final ResponseCookie tokenCookie = ResponseCookie.from("jwt_java_spring", token)
 			.httpOnly(true)
 			.secure(true)
 			.path("/")
