@@ -95,7 +95,7 @@ public class SecurityConfig {
 				)
 				// configure logout for server side authentication
 				.logout(logout -> logout
-					.deleteCookies("JSESSIONID")
+					.deleteCookies("sess_java_spring")
 					.logoutSuccessUrl("/")
 				)
 				// make sure we use stateless session; 
