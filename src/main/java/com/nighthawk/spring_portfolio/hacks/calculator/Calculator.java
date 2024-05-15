@@ -129,33 +129,33 @@ public class Calculator {
      */ 
     private void termsToRPN () {
         // A stack is used to push and pop calculation for grouping and precedence
-        Stack<TermOrOperator> termsStack = new Stack<>();
+        Stack<TermOrOperator> operatorStack = new Stack<>();
 
         // Process each term
         for (TermOrOperator term : terms) {
             // term is a marker for grouping
             if (term.getToken() == '(') { // open parenthesis
-                termsStack.push(term);
+                operatorStack.push(term);
             // term is a marker to empty group of terms to matching parenthesis
             } else if (term.getToken() == ')') { // close parenthesis
-                while (termsStack.peek() != null && termsStack.peek().getToken() != '(') {
-                    rpnTerms.add(termsStack.pop());
+                while (operatorStack.peek() != null && operatorStack.peek().getToken() != '(') {
+                    rpnTerms.add(operatorStack.pop());
                 }
-                termsStack.pop(); // remove open parenthesis
-            // term is an operator, shuffle terms between stack and RPN list to maintain precedence
+                operatorStack.pop(); // remove open parenthesis
+            // term is an operator, shuffle terms between Operator stack and RPN array list to maintain precedence
             } else if (operators.contains(term.getToken())) {
-                while (!termsStack.isEmpty() && operators.contains(termsStack.peek().getToken()) && term.isPrecedent(termsStack.peek())) {
-                    rpnTerms.add(termsStack.pop());
+                while (!operatorStack.isEmpty() && operators.contains(operatorStack.peek().getToken()) && term.isPrecedent(operatorStack.peek())) {
+                    rpnTerms.add(operatorStack.pop());
                 }
-                termsStack.push(term);
-            // term is a number, add to RPN
+                operatorStack.push(term);
+            // term is a value, add it directly to RPN array list
             } else {
                 this.rpnTerms.add(term);
             }
         }
-        // Empty the statck to RPN list
-        while (!termsStack.isEmpty()) {
-            rpnTerms.add(termsStack.pop());
+        // Empty the operator stack to RPN array list
+        while (!operatorStack.isEmpty()) {
+            rpnTerms.add(operatorStack.pop());
         }
     }
 
