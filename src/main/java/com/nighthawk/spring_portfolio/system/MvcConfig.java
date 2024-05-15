@@ -1,6 +1,8 @@
 package com.nighthawk.spring_portfolio.system;
 
 import org.springframework.lang.NonNull;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -11,6 +13,11 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(@NonNull ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
     /* map path and location for "uploads" outside of application resources

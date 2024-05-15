@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,10 +27,8 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
     private PersonJpaRepository personJpaRepository;
     @Autowired  // Inject RoleJpaRepository
     private PersonRoleJpaRepository personRoleJpaRepository;
-    // @Autowired  // Inject PasswordEncoder
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired // Inject PasswordEncoder
+    private PasswordEncoder passwordEncoder;
 
     /* loadUserByUsername Overrides and maps Person & Roles POJO into Spring Security */
     @Override
@@ -73,7 +70,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
 
     // encode password prior to sava
     public void save(Person person) {
-        person.setPassword(passwordEncoder().encode(person.getPassword()));
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
         personJpaRepository.save(person);
     }
 
@@ -94,7 +91,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
     public void defaults(String password, String roleName) {
         for (Person person: listAll()) {
             if (person.getPassword() == null || person.getPassword().isEmpty() || person.getPassword().isBlank()) {
-                person.setPassword(passwordEncoder().encode(password));
+                person.setPassword(passwordEncoder.encode(password));
             }
             if (person.getRoles().isEmpty()) {
                 PersonRole role = personRoleJpaRepository.findByName(roleName);
