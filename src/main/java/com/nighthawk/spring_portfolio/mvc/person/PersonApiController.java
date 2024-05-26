@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.Getter;
@@ -12,7 +14,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 @RestController
-@RequestMapping("/api/person")
+@RequestMapping("/api")
 public class PersonApiController {
     //     @Autowired
     // private JwtTokenUtil jwtGen;
@@ -29,9 +31,27 @@ public class PersonApiController {
     private PersonDetailsService personDetailsService;
 
     /*
+    GET current Person 
+     */
+    @GetMapping("/person")
+    public ResponseEntity<Person> getPerson(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = userDetails.getUsername();
+
+        // Assuming you have a method in your repository to find a person by username
+        Person person = repository.findByEmail(email);
+
+        if (person != null) {
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    /* 
     GET List of People
      */
-    @GetMapping("/")
+    @GetMapping("/people")
     public ResponseEntity<List<Person>> getPeople() {
         return new ResponseEntity<>( repository.findAllByOrderByNameAsc(), HttpStatus.OK);
     }
@@ -39,7 +59,7 @@ public class PersonApiController {
     /*
     GET individual Person using ID
      */
-    @GetMapping("/{id}")
+    @GetMapping("/person/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
@@ -53,7 +73,7 @@ public class PersonApiController {
     /*
     DELETE individual Person using ID
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/person/{id}")
     public ResponseEntity<Person> deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
@@ -79,7 +99,7 @@ public class PersonApiController {
     /*
     POST Aa record by Requesting Parameters from URI
      */
-    @PostMapping("/")
+    @PostMapping("/person")
     public ResponseEntity<Object> postPerson(@RequestBody PersonDto personDto) {
         // Validate dob input
         Date dob;
@@ -97,7 +117,7 @@ public class PersonApiController {
     /*
     The personSearch API looks across database for partial match to term (k,v) passed by RequestEntity body
      */
-    @PostMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/people/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> personSearch(@RequestBody final Map<String,String> map) {
         // extract term from RequestEntity
         String term = (String) map.get("term");
@@ -112,7 +132,7 @@ public class PersonApiController {
     /*
     The personStats API adds stats by Date to Person table 
     */
-    @PostMapping(value = "/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/person/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> personStats(@RequestBody final Map<String,Object> stat_map) {
         // find ID
         long id=Long.parseLong((String)stat_map.get("id"));  
