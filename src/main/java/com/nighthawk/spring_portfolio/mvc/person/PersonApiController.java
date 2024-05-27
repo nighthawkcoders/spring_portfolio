@@ -187,27 +187,28 @@ public class PersonApiController {
                 Map<String, Object> attributeMap = new HashMap<>(incomingStats);
                 attributeMap.remove("date");
     
-                // If this key does not exist in the existing stats, add it
-                if (!existingStats.containsKey(key)) {
+                // New key test. 
+                if (!existingStats.containsKey(key)) { 
+                    // Add the new key
                     existingStats.put(key, new HashMap<>());
                 }
     
-                // If this date already exists in the stats for this key, get the existing attributes for this date
-                if (existingStats.get(key).containsKey(date)) {
+                // Existing date test. 
+                if (existingStats.get(key).containsKey(date)) { // Existing date, update the attributes
+                    // Make a map inside of existingStats to hold the current attributes for the date
                     Map<String, Object> existingAttributes = (Map<String, Object>) existingStats.get(key).get(date);
-                    // Add the new attributes to the existing ones
+                    // Combine the existing attributes with these new attributes 
                     existingAttributes.putAll(attributeMap);
-                } else {
-                    // If this date does not exist in the stats for this key, add the new date and attributes
+                } else { // New date, add the new date and attributes
                     existingStats.get(key).put(date, attributeMap);
                 }
             }
     
-            // Set the updated stats
+            // Set and save the updated stats 
             person.setStats(existingStats);
-            repository.save(person);  // conclude by writing the stats updates
+            repository.save(person);  // conclude by writing the stats updates to the database
     
-            // return Person with update Stats
+            // return Person with update to Stats
             return new ResponseEntity<>(person, HttpStatus.OK);
         }
         // return Bad ID
