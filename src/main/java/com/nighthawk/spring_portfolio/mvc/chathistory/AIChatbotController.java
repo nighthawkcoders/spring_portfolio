@@ -2,7 +2,11 @@
 package com.nighthawk.spring_portfolio.mvc.chathistory;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -22,7 +26,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.web.bind.annotation.RestController;
 import com.nighthawk.spring_portfolio.mvc.person.PersonApiController;
-import com.nighthawk.spring_portfolio.mvc.person.Person;
 
 // AI Chat Bot Controller based on Chat GPT 3.5 API
 @RestController
@@ -92,18 +94,17 @@ public class AIChatbotController {
 	// chat history clear without user integration
 	@DeleteMapping("/chat/history/clear")
 	public String clearChatHistory(@RequestParam Long personid) {
-
-		List<Chat> 	chats = chatJpaRepository.deleteByPersonId(personid);
-		JSONObject obj = new JSONObject();
-		JSONArray list = new JSONArray();
-       
-		for (Chat c : chats) {
-			System.out.println("Chat ID: " + c.getId());
-			 list.add(c.toJSON());
+		List<Chat> chats = chatJpaRepository.deleteByPersonId(personid);
+		Map<String, Object> obj = new HashMap<>();
+		List<String> list = new ArrayList<>();
+	
+		for (Chat chat : chats) {
+			System.out.println("Chat ID: " + chat.getId());
+			list.add(chat.toJSON()); // Assuming toJSON() returns Map<String, Object>
 		}
 		
 		obj.put("chats", list);
-		return obj.toJSONString();
+		return new JSONObject(obj).toJSONString();
 	}
 
 
@@ -135,7 +136,7 @@ public class AIChatbotController {
 			// retrieve values
 			long personId = c.getPersonId();
 			String chatMsg = c.getChatMessage();
-			String response = c.getChatReponse();
+			String response = c.getChatResponse();
 			Date timeStamp = c.getTimestamp();
 			// set values in the two dimensional array
 			// counter is incremented at the end
@@ -219,14 +220,14 @@ public class AIChatbotController {
 	    	if (anObj.get("role").equals("assistant") && anObj.get("id").equals(firstId)) {
 	    		JSONArray contentArray = (JSONArray)anObj.get("content");
 	    		
-	    		for (int j = 0; j < contentArray.size(); j++) {
+	    		int j = 0; 
 	    			JSONObject contentObj = (JSONObject)contentArray.get(j);
 	    			JSONObject textObj = (JSONObject)contentObj.get("text");
 	    		
 	    			// this contains the chat gpt's response
 	    			chatReponse.append((String)textObj.get("value"));
 	    			break;
-	    		}
+	    		
 	    	}
 	    }
 
